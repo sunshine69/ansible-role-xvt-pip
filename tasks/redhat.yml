@@ -1,0 +1,19 @@
+---
+- name: sleep 5 sec (override with variable wait_for_rootfs) for the aws storage to be available
+  pause:
+    seconds: "{{wait_for_rootfs | default(5)}}"
+
+- name: Add epel-release for python-pip
+  yum:
+    name: epel-release
+    state: present
+
+- name: Ensure build-essential is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-devel
+    - python-pip
+    - gcc
+    - make

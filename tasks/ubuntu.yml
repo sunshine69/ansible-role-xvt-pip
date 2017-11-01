@@ -1,0 +1,15 @@
+---
+- name: sleep 5 sec (override with variable wait_for_rootfs) for the aws storage to be available
+  pause:
+    seconds: "{{wait_for_rootfs | default(5)}}"
+
+- name: Ensure build-essential is installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 1200
+  with_items:
+    - build-essential
+    - python-dev
+    - python-pip
