@@ -1,2 +1,19 @@
 - include_tasks: "{{ ansible_os_family|lower }}.yml"
 
+- name: Upgrade pip
+  command: 'pip install -U pip'
+
+- name: Install pip packages
+  pip:
+    name: "{{ item.name }}"
+    state: "{{ item.state|default('latest') }}"
+    executable: "{{ item.executable|default(omit) }}"
+    chdir: "{{ item.chdir|default(omit) }}"
+    extra_args: "{{ item.extra_args|default(omit) }}"
+    umask: "{{ item.umask|default(omit) }}"
+    version: "{{ item.version|default(omit) }}"
+    virtualenv: "{{ item.virtualenv|default(omit) }}"
+    virtualenv_command: "{{ item.virtualenv_command|default(omit) }}"
+    virtualenv_python: "{{ item.virtualenv_python|default(omit) }}"
+    virtualenv_site_packages: "{{ item.virtualenv_site_packages|default(omit) }}"
+  with_items: "{{ pip_packages|default([]) }}"
