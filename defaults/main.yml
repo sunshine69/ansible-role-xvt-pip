@@ -1,0 +1,4 @@
+build_essential_pkgs:
+ - build-essential
+ - python-dev
+ - python-pip
